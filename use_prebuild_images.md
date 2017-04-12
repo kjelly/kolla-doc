@@ -4,7 +4,7 @@ Use pre-building images
 - 下載 registry data
 
 ```
-wget http://127.0.0.1:4433/centos-source/registry_data_4.0.1.tar.gz -O ~/registry_data.tar.gz
+wget http://172.2.104.1:4433/centos-source/registry_data_4.0.1.tar.gz -O ~/registry_data.tar.gz
 ```
 
 - 解壓縮到
