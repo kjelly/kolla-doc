@@ -10,7 +10,7 @@ Deploy OpenStack
 - 下載 kolla-ansible-docker
 
 ```
-git clone https://github.com/ya790206/kolla-ansible-docker
+git clone https://github.com/ya790206/kolla-ansible-docker ~
 ```
 
 - 下載並安裝 kolla-ansible-docker image
@@ -20,9 +20,10 @@ wget https://172.22.104.1:4433/kolla-ansible-docker/ocata -O ~/kolla-ansible-doc
 docker load < ~/kolla-ansible-docker-ocata
 ```
 
-- 執行下面指令
+- 到 kolla-ansible-docker 目錄下執行下面指令
 
     ```
+    cd ~/kolla-ansible-docker
     ./run.sh
     ./config.sh
     ```
@@ -55,6 +56,7 @@ docker load < ~/kolla-ansible-docker-ocata
 - 執行下面指令，進入 container
 
     ```
+    cd ~/kolla-ansible-docker
     ./exec.sh
     ```
 
