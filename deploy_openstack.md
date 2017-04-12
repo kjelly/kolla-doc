@@ -46,7 +46,7 @@ git clone https://github.com/ya790206/kolla-ansible-docker
 
 - 修改 /etc/kolla/passwords.yml 如果你想換密碼的話
 
-- 執行下面指令
+- 執行下面指令，進入 container
 
     ```
     ./exec.sh

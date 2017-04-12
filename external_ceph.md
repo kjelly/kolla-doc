@@ -5,10 +5,10 @@ glance 與 cinder
 ----------------
 
 
-要讓 OpenStack 的 cinder 與 glance 接 ceph 很簡單
-只要將 globals.yml 中 enable_ceph 設成 no
-glance_backend_ceph 和 cinder_backend_ceph 設成 yes 即可
-然後在 /etc/kolla 目錄下建立下列的目錄結構
+要讓 OpenStack 的 cinder 與 glance 接 ceph 很簡單，
+只要將 globals.yml 中 enable_ceph 設成 no。
+glance_backend_ceph 和 cinder_backend_ceph 設成 yes 即可。
+然後在 /etc/kolla 目錄下建立下列的目錄結構：
 ```
 
 .
