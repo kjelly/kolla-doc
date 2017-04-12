@@ -13,10 +13,16 @@ Deploy OpenStack
 git clone https://github.com/ya790206/kolla-ansible-docker
 ```
 
+- 下載並安裝 kolla-ansible-docker image
+
+```
+wget https://172.22.104.1:4433/kolla-ansible-docker/ocata -O ~/kolla-ansible-docker-ocata
+docker load < ~/kolla-ansible-docker-ocata
+```
+
 - 執行下面指令
 
     ```
-    ./build.sh
     ./run.sh
     ./config.sh
     ```
