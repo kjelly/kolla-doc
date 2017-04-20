@@ -140,10 +140,10 @@ openstack baremetal configure boot
 
 - 替實體主機安裝系統
 ```
-    nova boot --image image --flavor baremetal --key-name my instance_name
+    nova boot --image overcloud-full --flavor baremetal --key-name my instance_name
 ```
 
 替三台實體主機安裝作業系統，主機名稱為 controller
 ```
-    nova boot --min-count 3 --max-count 3 --image image --flavor baremetal --key-name my controller
+    nova boot --min-count 3 --max-count 3 --image overcloud-full --flavor baremetal --key-name my controller
 ```
