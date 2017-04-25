@@ -10,13 +10,13 @@ Deploy OpenStack
 - 下載 kolla-ansible-docker
 
 ```
-git clone https://github.com/ya790206/kolla-ansible-docker ~
+git clone https://github.com/ya790206/kolla-ansible-docker ~/kolla-ansible-docker
 ```
 
 - 下載並安裝 kolla-ansible-docker image
 
 ```
-wget https://172.22.104.1:4433/kolla-ansible-docker/ocata -O ~/kolla-ansible-docker-ocata
+wget http://172.22.104.1:4433/kolla-ansible-docker/ocata -O ~/kolla-ansible-docker-ocata
 docker load < ~/kolla-ansible-docker-ocata
 ```
 
@@ -43,6 +43,7 @@ docker load < ~/kolla-ansible-docker-ocata
     - kolla_base_distro : centos
     - kolla_install_type ： source
     - openstack_release : 4.0.1
+    - docker_registry: 填寫裝在 deploy node 的 registry 格式如 "192.0.2.1:4000"，4000 為 port 號
     - network_interface: management 網段用的 interface
     - kolla_internal_vip_address : controller 的 vip ，此 ip 不能有人使用
     - kolla_external_vip_interface: controller 的外部 vip 所有的 interface 。外部是指 keystone 裡面的 public url
