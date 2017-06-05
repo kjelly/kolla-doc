@@ -32,7 +32,7 @@ docker load < ~/kolla-ansible-docker-ocata
   [network] 下方。以此類推。network node 無特別需求，則和 controller 一樣。第一欄位填寫 ip 或是主機名稱。如
 
     ```
-    c1 ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=/etc/kolla/my ansible_become_user=root ansible_become=true ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
+    c1  ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=/etc/kolla-ansible-docker/my ansible_become_user=root ansible_become=true validate_certs=False host_key_checking=False
     ```
 
   c1 是指主機名稱，可以用 ip 代替。
@@ -45,8 +45,8 @@ docker load < ~/kolla-ansible-docker-ocata
     - openstack_release : 4.0.1
     - docker_registry: 填寫裝在 deploy node 的 registry 格式如 "192.0.2.1:4000"，4000 為 port 號
     - network_interface: management 網段用的 interface
-    - kolla_internal_vip_address : controller 的 vip ，此 ip 不能有人使用
-    - kolla_external_vip_interface: controller 的外部 vip 所有的 interface 。外部是指 keystone 裡面的 public url
+    - kolla_internal_vip_address : controller 的 vip ，此 ip 不能有人使用。此 ip 走 network_interface
+    - kolla_external_vip_interface: controller 的外部 vip 所有的 interface 。外部是指 keystone 裡面的 public url。值為 br-ex
     - kolla_external_vip_address: controller 的外部 vip ，此 ip 不能有人使用。外部是指 keystone 裡面的 public url
     - docker_registry: docker registry，之前你將 kolla docker push 到的地方
     - storage_interface : storage 網段用的 interface
@@ -61,11 +61,48 @@ docker load < ~/kolla-ansible-docker-ocata
     ```
     cd ~/kolla-ansible-docker
     ./exec.sh
+
     ```
+
+- 選項步驟，讓每台電腦的 interface 名稱固定。在 production 環境中一定要做
+  避免電腦的 interface 名稱改變而導致 OpenStack 毀損。
+
+  修改或建立此檔案 /etc/kolla-ansible-docker/rename_rules.json
+  檔案格式如下面範例
+
+  ```
+    {
+      "host_list": [
+          {
+            "fa:16:3e:51:48:29": "eno1"
+          },
+          {
+            "fa:16:3e:51:49:28": "eno1"
+            "fa:16:3e:51:49:29": "eno2"
+          }
+      ]
+    }
+  ```
+  上面範例有兩個主機，它會自動找尋有mac是"fa:16:3e:51:48:29"的主機，並將它
+  "fa:16:3e:51:48:29" 的網路卡名稱設定成 eno1
+
+  然後自動找尋有mac是"fa:16:3e:51:49:28" or "fa:16:3e:51:49:28" 的主機，並將它
+  "fa:16:3e:51:49:28" 的網路卡名稱設定成 eno1, "fa:16:3e:51:49:29" 的網路卡名稱設定成 eno2
+
+  然後執行 prepare 指令（在 container 裡面）
+
+  注意，此步驟只產生設定檔。要重新啟動後才生效。
+
+
+- 選項步驟，產生 network bonding 設定檔。
+  由於產生 network bonding 的程式不在 container 內
+  所以文件參考
+
 
 - 在 container 裡面執行下列指令，
 
     ```
+    prepare
     ka bootstrap-servers
     ka prechecks
     ka deploy

@@ -25,6 +25,10 @@ glance_backend_ceph 和 cinder_backend_ceph 設成 yes 即可。
 │       ├── ceph.client.glance.keyring
 │       ├── ceph.conf
 │       └── glance-api.conf
+├────── nova
+│       ├── ceph.client.cinder.keyring
+│       ├── ceph.client.nova.keyring
+│       └── ceph.conf
 ├── globals.yml
 └── passwords.yml
 
@@ -79,6 +83,6 @@ backend_host=rbd:volumes
 rbd_pool=volumes
 volume_backend_name=rbd-1
 volume_driver=cinder.volume.drivers.rbd.RBDDriver
-
+rbd_secret_uuid = {{ cinder_rbd_secret_uuid }}
 
 ```

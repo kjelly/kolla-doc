@@ -40,3 +40,8 @@ docker stop glance_registry
 docker start glance_registry
 docker restart glance_registry
 ```
+
+
+sudo docker exec -it -u root cinder_volume rbd --id cinder -p volumes ls
+sudo docker exec -it -u root cinder_volume ceph --id glance -p images ls
+

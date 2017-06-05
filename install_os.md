@@ -147,3 +147,13 @@ openstack baremetal configure boot
 ```
     nova boot --min-count 3 --max-count 3 --image overcloud-full --flavor baremetal --key-name my controller
 ```
+
+- 預設那些實體機器的 default gateway 是 deploy node。如果要讓那些機器可以透過 deploy node
+  連到外面，可透過下面指令完成
+
+```
+iptables -t nat -A POSTROUTING -s 192.0.2.0/24 -o 可以對外的網卡 -j MASQUERADE
+```
+
+
+-  如果連接到 instance 時，ssh 的速度過慢則將 /etc/ssh/sshd_config 的 UseDNS 改成 no
