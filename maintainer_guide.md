@@ -45,3 +45,17 @@ docker restart glance_registry
 sudo docker exec -it -u root cinder_volume rbd --id cinder -p volumes ls
 sudo docker exec -it -u root cinder_volume ceph --id glance -p images ls
 
+
+主機重開機後要做的事情
+------------------
+
+由於很多 interface 需要和 br-ex 相接，可是 br-ex 剛開機完並不存在(br-ex 是 container 建立的)
+因此需要在 br-ex 建立後，將其他 interface 加入 br-ex
+
+
+修改 OpenStack 設定檔
+--------------------
+
+設定檔都在 Container 裡面，實務上你不應該直接修改它。在 deploy node 的 /etc/kolla/config 放你要修改
+的設定檔。
+如你想要修改 nova.conf 的 cpu_mode 的值，則在 /etc/kolla/config 建立 nova.conf 並填入 cpu_mode=kvm 

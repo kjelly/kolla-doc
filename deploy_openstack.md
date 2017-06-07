@@ -46,7 +46,7 @@ docker load < ~/kolla-ansible-docker-ocata
     - docker_registry: 填寫裝在 deploy node 的 registry 格式如 "192.0.2.1:4000"，4000 為 port 號
     - network_interface: management 網段用的 interface
     - kolla_internal_vip_address : controller 的 vip ，此 ip 不能有人使用。此 ip 走 network_interface
-    - kolla_external_vip_interface: controller 的外部 vip 所有的 interface 。外部是指 keystone 裡面的 public url。值為 br-ex
+    - kolla_external_vip_interface: controller 的外部 vip 所有的 interface 。外部是指 keystone 裡面的 public url。
     - kolla_external_vip_address: controller 的外部 vip ，此 ip 不能有人使用。外部是指 keystone 裡面的 public url
     - docker_registry: docker registry，之前你將 kolla docker push 到的地方
     - storage_interface : storage 網段用的 interface
@@ -64,7 +64,7 @@ docker load < ~/kolla-ansible-docker-ocata
 
     ```
 
-- 選項步驟，讓每台電腦的 interface 名稱固定。在 production 環境中一定要做
+- 此步驟不一定要做，讓每台電腦的 interface 名稱固定。在 production 環境中一定要做
   避免電腦的 interface 名稱改變而導致 OpenStack 毀損。
 
   修改或建立此檔案 /etc/kolla-ansible-docker/rename_rules.json
@@ -94,7 +94,7 @@ docker load < ~/kolla-ansible-docker-ocata
   注意，此步驟只產生設定檔。要重新啟動後才生效。
 
 
-- 選項步驟，產生 network bonding 設定檔。
+- 此步驟不一定要做，產生 network bonding 設定檔。
   由於產生 network bonding 的程式不在 container 內
   所以文件參考
 
@@ -106,4 +106,17 @@ docker load < ~/kolla-ansible-docker-ocata
     ka bootstrap-servers
     ka prechecks
     ka deploy
+    ```
+
+- 再一次修改 /etc/kolla/globals.yml 的下列欄位。
+
+    - kolla_external_vip_interface: 將值改成 br-ex
+  
+  由於外部網路的 vip 要放在 br-ex 上，但是 br-ex 是由 container 建立的，所以第一次佈署時，無法填寫 br-ex
+  (因為 br-ex 不存在)。所以要在佈署後在修改設定
+
+- 在 container 裡面執行下列指令，
+
+    ```
+    ka reconfigure
     ```
