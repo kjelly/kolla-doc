@@ -1,6 +1,8 @@
 Use pre-building images
 -----------------------
 
+- 使用一般使用者或是 stack user
+
 - 下載 registry data 到 deploy node
 
 ```
