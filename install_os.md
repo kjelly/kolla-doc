@@ -135,7 +135,7 @@ openstack overcloud node introspect --all-manageable --provide
 openstack baremetal configure boot
 ```
 
-- 建立 keyring，名稱為 my
+- 建立 nova key-pair，名稱為 my。用來 ssh 用的
 
 
 - 替實體主機安裝系統
