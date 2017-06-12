@@ -111,7 +111,7 @@ docker load < ~/kolla-ansible-docker-ocata
 - 再一次修改 /etc/kolla/globals.yml 的下列欄位。
 
     - kolla_external_vip_interface: 將值改成 br-ex
-  
+
   由於外部網路的 vip 要放在 br-ex 上，但是 br-ex 是由 container 建立的，所以第一次佈署時，無法填寫 br-ex
   (因為 br-ex 不存在)。所以要在佈署後在修改設定
 
@@ -120,3 +120,17 @@ docker load < ~/kolla-ansible-docker-ocata
     ```
     ka reconfigure
     ```
+
+- 為了確保重新開機後網路界面有啟用，請在此路徑 /etc/inwin/post-boot-scripts/ 建立 10-init-all-interface
+  確保此檔案可以被執行，檔案內容如下
+
+  ```
+  #!/bin/bash
+  python /opt/InwinSTACK/ifup.py br-ex
+  ifup XXX
+  ifup YYY
+
+  ```
+
+  前兩行是固定的，XXX 和 YYY 請換成該電腦有的 interface 。有多少張網卡就 ifup 多少個。
+
