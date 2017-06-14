@@ -5,7 +5,7 @@ Deploy OpenStack
 步驟：
 =====
 
-- 先安裝 docker
+- 先安裝 docker (如果是在 deploy node, deploy node 預設有安裝 docker)
 
 - 下載 kolla-ansible-docker
 
@@ -96,7 +96,8 @@ docker load < ~/kolla-ansible-docker-ocata
 
 - 此步驟不一定要做，產生 network bonding 設定檔。
   由於產生 network bonding 的程式不在 container 內
-  所以文件參考
+  所以文件參考 [network bonding](https://github.com/ya790206/kolla-doc/blob/master/network-bonding.md)
+  
 
 
 - 在 container 裡面執行下列指令，

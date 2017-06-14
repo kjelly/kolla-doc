@@ -149,7 +149,7 @@ openstack baremetal configure boot
 ```
 
 - 預設那些實體機器的 default gateway 是 deploy node。如果要讓那些機器可以透過 deploy node
-  連到外面，可透過下面指令完成
+  連到外面，可透過下面指令完成。192.0.2.0/24 改成你 ~/undercloud.conf 裡 network_cidr 的值 
 
 ```
 iptables -t nat -A POSTROUTING -s 192.0.2.0/24 -o 可以對外的網卡 -j MASQUERADE
