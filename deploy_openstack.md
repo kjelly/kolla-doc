@@ -28,7 +28,7 @@ docker load < ~/kolla-ansible-docker-ocata
     ./config.sh
     ```
 
-- 修改 /etc/kolla/inventory。將 controller 資訊填在 [control]下方，network node 資訊填在
+- 修改 /etc/kolla-ansible-docker/inventory。將 controller 資訊填在 [control]下方，network node 資訊填在
   [network] 下方。以此類推。network node 無特別需求，則和 controller 一樣。第一欄位填寫 ip 或是主機名稱。如
 
     ```
