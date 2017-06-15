@@ -39,6 +39,8 @@ docker load < ~/kolla-ansible-docker-ocata
   ansible_user 是指 deploy node 要 ssh 到 user。可以用 root 代替。使用 TripleO 安裝作業系統時，可以用 centos 或 ubuntu 代替。
   ansible_ssh_private_key_file 是指你 ssh 時要用的 key file path 。
 
+  [deploy] 裡面填寫 deploy node 的資訊
+
 - 修改 /etc/kolla/globals.yml 的下列欄位
     - kolla_base_distro : centos
     - kolla_install_type ： source
@@ -46,7 +48,7 @@ docker load < ~/kolla-ansible-docker-ocata
     - docker_registry: 填寫裝在 deploy node 的 registry 格式如 "192.0.2.1:4000"，4000 為 port 號
     - network_interface: management 網段用的 interface
     - kolla_internal_vip_address : controller 的 vip ，此 ip 不能有人使用。此 ip 走 network_interface
-    - kolla_external_vip_interface: controller 的外部 vip 所有的 interface 。外部是指 keystone 裡面的 public url。
+    - kolla_external_vip_interface: controller 的外部 vip 所有的 interface 。外部是指 keystone 裡面的 public url。先設定成和 neutron_external_interface 一樣的值。
     - kolla_external_vip_address: controller 的外部 vip ，此 ip 不能有人使用。外部是指 keystone 裡面的 public url
     - docker_registry: docker registry，之前你將 kolla docker push 到的地方
     - storage_interface : storage 網段用的 interface
@@ -77,7 +79,7 @@ docker load < ~/kolla-ansible-docker-ocata
             "fa:16:3e:51:48:29": "eno1"
           },
           {
-            "fa:16:3e:51:49:28": "eno1"
+            "fa:16:3e:51:49:28": "eno1",
             "fa:16:3e:51:49:29": "eno2"
           }
       ]
@@ -100,7 +102,7 @@ docker load < ~/kolla-ansible-docker-ocata
   
 
 
-- 在 container 裡面執行下列指令，
+- 在 container 裡面執行下列指令，每次增加或減少 node 時，都要完整跑過下面指令
 
     ```
     prepare
