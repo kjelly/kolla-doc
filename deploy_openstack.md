@@ -137,3 +137,14 @@ docker load < ~/kolla-ansible-docker-ocata
 
   前兩行是固定的，XXX 和 YYY 請換成該電腦有的 interface 。有多少張網卡就 ifup 多少個。
 
+
+
+- 建立地一個網路， ip 部份請改成你要的
+
+```
+neutron net-create ext-net --router:external \
+      --provider:physical_network physnet1 --provider:network_type flat
+neutron subnet-create ext-net --name ext-subnet \
+ --allocation-pool start=192.168.1.150,end=192.168.1.200 \
+ --disable-dhcp --gateway 192.168.1.1 192.168.1.0/24
+```
