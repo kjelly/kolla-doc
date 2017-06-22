@@ -13,7 +13,7 @@ Build Kolla image
     在 deploy node 上執行下面指令
 
     ```
-        docker run -d -p 5000:5000 --name registry registry:2
+        sudo docker run -d -p 5000:5000 --name registry registry:2
     ```
 
 - 下載 kolla-docker
