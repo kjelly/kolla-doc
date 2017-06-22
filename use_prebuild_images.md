@@ -15,6 +15,18 @@ wget http://172.22.104.1:4433/centos-source/registry_data_4.0.1.tar.gz -O ~/regi
 sudo tar -zxf ~/registry_data.tar.gz -C /
 ```
 
+- 下載 registry image (offline installation only)
+
+```
+wget http://172.22.104.1:4433/registry.tar -O ~/registry.tar
+```
+
+- 匯入 registry image (offline installation only)
+
+```
+docker load < ~/registry.tar
+```
+
 - 在 deploy node 啟動 registry
 
 ```
