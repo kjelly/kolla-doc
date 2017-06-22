@@ -3,7 +3,7 @@ Deploy OpenStack
 
 
 步驟：
-=====
+-----
 
 - 先安裝 docker (如果是在 deploy node, deploy node 預設有安裝 docker)
 
@@ -56,6 +56,12 @@ docker load < ~/kolla-ansible-docker-ocata
 
 - 如果要設定外部的 ceph ，請多做這些事情 [external ceph](https://github.com/ya790206/kolla-doc/blob/master/external_ceph.md)
 
+- 選項設定，可做可不做。記得移除前面的 # 字號
+  - enable_central_logging 改成 yes （這樣 log 會額外存到 elasticsearch)
+  - 要監控實體機器，則將 enable_influxdb, enable_telegraf, enable_grafana 改成 yes
+  - 要監控虛擬機器，則將 enable_ceilometer, enable_gnocchi 改成 yes。
+    並將 ceilometer_database_type 改成 gnocchi。將 ceilometer_event_type 改成 gnocchi。
+
 - 修改 /etc/kolla/passwords.yml 如果你想換密碼的話
 
 - 執行下面指令，進入 container
@@ -64,7 +70,7 @@ docker load < ~/kolla-ansible-docker-ocata
     cd ~/kolla-ansible-docker
     ./exec.sh
 
-    ```
+   ```
 
 - 此步驟不一定要做，讓每台電腦的 interface 名稱固定。在 production 環境中一定要做
   避免電腦的 interface 名稱改變而導致 OpenStack 毀損。
