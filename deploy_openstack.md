@@ -62,6 +62,12 @@ docker load < ~/kolla-ansible-docker-ocata
   - 要監控虛擬機器，則將 enable_ceilometer, enable_gnocchi 改成 yes。
     並將 ceilometer_database_type 改成 gnocchi。將 ceilometer_event_type 改成 gnocchi。
 
+- 如果要啟用 TLS 則做下面事項
+
+  - 將 kolla_enable_tls_external 改成 yes
+  - 將 kolla_external_fqdn_cert 改成 /etc/kolla/certificates/haproxy.pem
+  - 將憑證放在 /etc/kolla/certificates/haproxy.pem
+
 - 修改 /etc/kolla/passwords.yml 如果你想換密碼的話
 
 - 執行下面指令，進入 container
