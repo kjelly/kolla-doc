@@ -6,6 +6,8 @@ Deploy OpenStack
 -----
 
 - 先安裝 docker (如果是在 deploy node, deploy node 預設有安裝 docker)
+  除了 deploy node ，其他主機不可以安裝 docker 相關套件
+
 
 - 下載 kolla-ansible-docker
 
