@@ -15,23 +15,23 @@ git clone https://github.com/ya790206/kolla-ansible-docker ~/kolla-ansible-docke
 
 - 下載並安裝 kolla-ansible-docker image
 
-```
+```bash
 wget http://172.22.104.1:4433/kolla-ansible-docker/ocata -O ~/kolla-ansible-docker-ocata
 docker load < ~/kolla-ansible-docker-ocata
 ```
 
 - 到 kolla-ansible-docker 目錄下執行下面指令
 
-    ```
+    ```bash
     cd ~/kolla-ansible-docker
-    ./run.sh
-    ./config.sh
+    sudo ./run.sh
+    sudo ./config.sh
     ```
 
 - 修改 /etc/kolla-ansible-docker/inventory。將 controller 資訊填在 [control]下方，network node 資訊填在
   [network] 下方。以此類推。network node 無特別需求，則和 controller 一樣。第一欄位填寫 ip 或是主機名稱。如
 
-    ```
+    ```ini
     c1  ansible_connection=ssh ansible_user=ubuntu ansible_ssh_private_key_file=/etc/kolla-ansible-docker/my ansible_become_user=root ansible_become=true validate_certs=False host_key_checking=False
     ```
 
@@ -72,9 +72,9 @@ docker load < ~/kolla-ansible-docker-ocata
 
 - 執行下面指令，進入 container
 
-    ```
+    ```bash
     cd ~/kolla-ansible-docker
-    ./exec.sh
+    sudo ./exec.sh
 
    ```
 
@@ -84,7 +84,8 @@ docker load < ~/kolla-ansible-docker-ocata
   修改或建立此檔案 /etc/kolla-ansible-docker/rename_rules.json
   檔案格式如下面範例
 
-  ```
+  ```json
+
     {
       "host_list": [
           {
@@ -96,6 +97,7 @@ docker load < ~/kolla-ansible-docker-ocata
           }
       ]
     }
+
   ```
   上面範例有兩個主機，它會自動找尋有mac是"fa:16:3e:51:48:29"的主機，並將它
   "fa:16:3e:51:48:29" 的網路卡名稱設定成 eno1
@@ -111,12 +113,12 @@ docker load < ~/kolla-ansible-docker-ocata
 - 此步驟不一定要做，產生 network bonding 設定檔。
   由於產生 network bonding 的程式不在 container 內
   所以文件參考 [network bonding](https://github.com/ya790206/kolla-doc/blob/master/network-bonding.md)
-  
+
 
 
 - 在 container 裡面執行下列指令，每次增加或減少 node 時，都要完整跑過下面指令
 
-    ```
+    ```bash
     prepare
     ka bootstrap-servers
     ka prechecks
@@ -139,7 +141,7 @@ docker load < ~/kolla-ansible-docker-ocata
 - 為了確保重新開機後網路界面有啟用，請在此路徑 /etc/inwin/post-boot-scripts/ 建立 10-init-all-interface
   確保此檔案可以被執行，檔案內容如下
 
-  ```
+  ```bash
   #!/bin/bash
   python /opt/InwinSTACK/ifup.py br-ex
   ifup XXX
@@ -153,7 +155,7 @@ docker load < ~/kolla-ansible-docker-ocata
 
 - 建立地一個網路， ip 部份請改成你要的
 
-```
+```bash
 neutron net-create ext-net --router:external \
       --provider:physical_network physnet1 --provider:network_type flat
 neutron subnet-create ext-net --name ext-subnet \

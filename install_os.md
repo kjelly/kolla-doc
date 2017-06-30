@@ -11,7 +11,7 @@
 
 - 在 root 使用者下執行下面指令
 
-```
+```bash
 
 sudo useradd stack
 sudo passwd stack
@@ -51,7 +51,7 @@ cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
 
 - 下載並解壓縮資料
 
-```
+```bash
 cd ~stack/
 wget https://buildlogs.centos.org/centos/7/cloud/x86_64/tripleo_images/newton/delorean/ironic-python-agent.tar
 wget https://buildlogs.centos.org/centos/7/cloud/x86_64/tripleo_images/newton/delorean/overcloud-full.tar
@@ -61,7 +61,7 @@ tar xvf ironic-python-agent.tar
 
 - 上傳 image
 
-```
+```bash
 openstack overcloud image upload
 ```
 
@@ -70,7 +70,7 @@ openstack overcloud image upload
   node
 
 這是一個 node 的範例
-```
+```json
 {
    "nodes": [
        {
@@ -88,7 +88,7 @@ openstack overcloud image upload
 ```
 
 這是兩個 node 的範例
-```
+```json
 {
    "nodes": [
        {
@@ -117,13 +117,13 @@ openstack overcloud image upload
 
 - 註冊 nodes
 
-```
+```bash
 openstack overcloud node import ~/nodes.json
 ```
 
 - 執行下面指令，讓那其他 node 變成可用狀態
 
-```
+```bash
 
 openstack overcloud node introspect --all-manageable --provide
 
@@ -131,7 +131,7 @@ openstack overcloud node introspect --all-manageable --provide
 
 - 執行下列指令
 
-```
+```bash
 openstack baremetal configure boot
 ```
 
@@ -139,19 +139,19 @@ openstack baremetal configure boot
 
 
 - 替實體主機安裝系統
-```
+```bash
     nova boot --image overcloud-full --flavor baremetal --key-name my instance_name
 ```
 
 替三台實體主機安裝作業系統，主機名稱為 controller
-```
+```bash
     nova boot --min-count 3 --max-count 3 --image overcloud-full --flavor baremetal --key-name my controller
 ```
 
 - 預設那些實體機器的 default gateway 是 deploy node。如果要讓那些機器可以透過 deploy node
   連到外面，可透過下面指令完成。192.0.2.0/24 改成你 ~/undercloud.conf 裡 network_cidr 的值 
 
-```
+```bash
 iptables -t nat -A POSTROUTING -s 192.0.2.0/24 -o 可以對外的網卡 -j MASQUERADE
 ```
 
