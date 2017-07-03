@@ -9,6 +9,8 @@
 
 - 先在 deploy node 上安裝 CentOS
 
+- 如果要 offline 安裝，請先參考這文件 [Offline installation](https://github.com/ya790206/kolla-doc/blob/master/offline_install_tripleO.md)
+
 - 在 root 使用者下執行下面指令
 
 ```bash
