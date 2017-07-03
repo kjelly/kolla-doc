@@ -104,7 +104,7 @@ docker load < ~/kolla-ansible-docker-ocata
   上面範例有兩個主機，它會自動找尋有mac是"fa:16:3e:51:48:29"的主機，並將它
   "fa:16:3e:51:48:29" 的網路卡名稱設定成 eno1
 
-  然後自動找尋有mac是"fa:16:3e:51:49:28" or "fa:16:3e:51:49:28" 的主機，並將它
+  然後自動找尋有mac是"fa:16:3e:51:49:28" or "fa:16:3e:51:49:29" 的主機，並將它
   "fa:16:3e:51:49:28" 的網路卡名稱設定成 eno1, "fa:16:3e:51:49:29" 的網路卡名稱設定成 eno2
 
   然後執行 prepare 指令（在 container 裡面）
@@ -155,7 +155,7 @@ docker load < ~/kolla-ansible-docker-ocata
 
 
 
-- 建立地一個網路， ip 部份請改成你要的
+- 建立第一個網路， ip 部份請改成你要的
 
 ```bash
 neutron net-create ext-net --router:external \
