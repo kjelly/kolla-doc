@@ -63,12 +63,18 @@ docker load < ~/kolla-ansible-docker-ocata
   - 要監控實體機器，則將 enable_influxdb, enable_telegraf, enable_grafana 改成 yes
   - 要監控虛擬機器，則將 enable_ceilometer, enable_gnocchi 改成 yes。
     並將 ceilometer_database_type 改成 gnocchi。將 ceilometer_event_type 改成 gnocchi。
+  - 如果你有裝 ceph ，則將 gnocchi_backend_storage 改成 ceph。在無 ceph 的情形下
+    ，無法在 multi node 的環境下使用 gnocchi 。
 
 - 如果要啟用 TLS 則做下面事項
 
   - 將 kolla_enable_tls_external 改成 yes
   - 將 kolla_external_fqdn_cert 改成 /etc/kolla/certificates/haproxy.pem
   - 將憑證放在 /etc/kolla/certificates/haproxy.pem
+  - 產生臨時憑證的方法，請勿用在真實環境
+    ```
+        /kolla-ansible/tools/kolla-ansible certificate
+    ```
 
 - 修改 /etc/kolla/passwords.yml 如果你想換密碼的話
 

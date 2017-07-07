@@ -8,7 +8,7 @@ kolla-ansible 的 log 不是存放在主機的 /var/log 下面
 而是放在 container 下的 /var/log/kolla 路徑
 想要查詢 container name 的方法
 
-```
+```bash
 docker ps -a
 ```
 
@@ -19,6 +19,14 @@ docker exec -it nova_libvirt /bin/bash
 ```
 
 如果你有啟用 ELK ，則可以在 ELK 看到所有的 log
+
+
+你也可以到每台電腦的此路徑找到 log
+
+
+```
+cd /var/lib/docker/volumes/kolla_logs/_data
+```
 
 
 查看設定檔
@@ -35,16 +43,19 @@ docker exec -it nova_libvirt /bin/bash
 kolla-ansible 並無提供友善的管理界面來開啟或停止服務
 需要到各個主機去開啟或停止服務，指令如下
 
-```
+```bash
 docker stop glance_registry
 docker start glance_registry
 docker restart glance_registry
 ```
 
+檢查 cinder 和 glance 正確接到 ceph
+---------------------------------
 
+```bash
 sudo docker exec -it -u root cinder_volume rbd --id cinder -p volumes ls
-sudo docker exec -it -u root cinder_volume ceph --id glance -p images ls
-
+sudo docker exec -it -u root glance_api ceph --id glance -p images ls
+```
 
 主機重開機後要做的事情
 ------------------
@@ -58,4 +69,4 @@ sudo docker exec -it -u root cinder_volume ceph --id glance -p images ls
 
 設定檔都在 Container 裡面，實務上你不應該直接修改它。在 deploy node 的 /etc/kolla/config 放你要修改
 的設定檔。
-如你想要修改 nova.conf 的 cpu_mode 的值，則在 /etc/kolla/config 建立 nova.conf 並填入 cpu_mode=kvm 
+如你想要修改 nova.conf 的 cpu_mode 的值，則在 /etc/kolla/config 建立 nova.conf 並填入 cpu_mode=kvm
