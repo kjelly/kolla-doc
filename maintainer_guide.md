@@ -54,7 +54,7 @@ docker restart glance_registry
 
 ```bash
 sudo docker exec -it -u root cinder_volume rbd --id cinder -p volumes ls
-sudo docker exec -it -u root glance_api ceph --id glance -p images ls
+sudo docker exec -it -u root cinder_backup rbd --id cinder-backup -p backups ls
 ```
 
 主機重開機後要做的事情
@@ -70,3 +70,10 @@ sudo docker exec -it -u root glance_api ceph --id glance -p images ls
 設定檔都在 Container 裡面，實務上你不應該直接修改它。在 deploy node 的 /etc/kolla/config 放你要修改
 的設定檔。
 如你想要修改 nova.conf 的 cpu_mode 的值，則在 /etc/kolla/config 建立 nova.conf 並填入 cpu_mode=kvm
+
+
+執行 reconfig 時，產生出來的設定檔有變動，但 container 內的設定沒變
+-------------------------------------------------------------
+
+遇到此問題時，解決方法是重新起到那個 container ，讓它讀取新的 container。
+目前已知有此問題的 container 有 cinder_backup
