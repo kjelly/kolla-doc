@@ -69,7 +69,7 @@ container_formats = bare
 disk_formats = raw
 ```
 
-cinder-volume.conf 內容如下
+cinder-volume.conf and cinder-backup.conf 內容如下
 
 ```
 
@@ -84,5 +84,15 @@ rbd_pool=volumes
 volume_backend_name=rbd-1
 volume_driver=cinder.volume.drivers.rbd.RBDDriver
 rbd_secret_uuid = {{ cinder_rbd_secret_uuid }}
+
+backup_driver = cinder.backup.drivers.ceph
+backup_ceph_conf = /etc/ceph/ceph.conf
+backup_ceph_user = cinder-backup
+backup_ceph_chunk_size = 134217728
+backup_ceph_pool = backups
+backup_ceph_stripe_unit = 0
+backup_ceph_stripe_count = 0
+restore_discard_excess_bytes = true
+
 
 ```
