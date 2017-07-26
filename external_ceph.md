@@ -16,9 +16,11 @@ glance_backend_ceph 和 cinder_backend_ceph 設成 yes 即可。
 │   ├── cinder
 │   │   ├── cinder-backup
 │   │   │   ├── ceph.client.cinder.keyring
+│   │   │   ├── ceph.client.cinder-backups.keyring
 │   │   │   └── ceph.conf
 │   │   ├── cinder-volume
 │   │   │   ├── ceph.client.cinder.keyring
+│   │   │   ├── ceph.client.cinder-backups.keyring
 │   │   │   └── ceph.conf
 │   │   └── cinder-volume.conf
 │   └── glance
