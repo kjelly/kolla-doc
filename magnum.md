@@ -5,7 +5,9 @@ Magnum
 - 下載 CoreOS image
   ``` bash
 
-      wget https://stable.release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso -O  ~/CoreOS.iso
+      cd ~
+
+      wget https://stable.release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso -O  CoreOS.iso
 
   ```
 
@@ -13,8 +15,9 @@ Magnum
 - 上傳 CoreOS image 
 
   ```bash
+    cd ~
 
-  glance image-create --name CoreOS --visibility public --disk-format=qcow2 --container-format=bare --os-distro=coreos --file=~/CoreOS.iso
+    glance image-create --name CoreOS --visibility public --disk-format=qcow2 --container-format=bare --os-distro=coreos --file=CoreOS.iso
 
   ```
 
