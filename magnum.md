@@ -7,7 +7,7 @@ Magnum
 
       cd ~
 
-      wget https://stable.release.core-os.net/amd64-usr/current/coreos_production_iso_image.iso -O  CoreOS.iso
+      wget https://download.fedoraproject.org/pub/alt/atomic/stable/Fedora-Atomic-26-20170723.0/CloudImages/x86_64/images/Fedora-Atomic-26-20170723.0.x86_64.qcow2
 
   ```
 
@@ -17,8 +17,7 @@ Magnum
   ```bash
     cd ~
 
-    glance image-create --name CoreOS --visibility public --disk-format=qcow2 --container-format=bare --os-distro=coreos --file=CoreOS.iso
-
+    glance image-create --name atomic --visibility public --disk-format=qcow2 --container-format=bare --os-distro=fedora-atomic --file=Fedora-Atomic-26-20170723.0.x86_64.qcow2
   ```
 
 - 建立 kubernetes template 
@@ -26,15 +25,16 @@ Magnum
 
 
 ``` bash
-magnum cluster-template-create --name k8s-cluster-template-coreos \
-                         --image-id CoreOS \
-                         --keypair-id my \
-                         --external-network-id ext-net \
-                         --dns-nameserver 8.8.8.8 \
-                         --flavor-id cpu4 \
-                         --master-flavor-id cpu2 \
-                         --network-driver flannel \
-                         --coe kubernetes
+magnum cluster-template-create --name k8s-cluster-template-atomic \
+                          --image-id atomic \
+                          --keypair-id my \
+                          --external-network-id ext-net \
+                          --dns-nameserver 8.8.8.8 \
+                          --flavor-id cpu4 \
+                          --master-flavor-id cpu2 \
+                          --network-driver flannel \
+                          --coe kubernetes
+
 ```
 
 
