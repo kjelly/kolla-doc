@@ -12,7 +12,7 @@ Magnum
   ```
 
 
-- 上傳 CoreOS image 
+- 上傳 CoreOS image
 
   ```bash
     cd ~
@@ -20,7 +20,7 @@ Magnum
     glance image-create --name atomic --visibility public --disk-format=qcow2 --container-format=bare --os-distro=fedora-atomic --file=Fedora-Atomic-26-20170723.0.x86_64.qcow2
   ```
 
-- 建立 kubernetes template 
+- 建立 kubernetes template
   記得將 keypair-id, flavvor-id, master-flavor-id 換掉
 
 
@@ -39,3 +39,53 @@ magnum cluster-template-create --name k8s-cluster-template-atomic \
 
 
 - 從 ui 建立 kubernetes cluster
+
+
+- 下載 kubectl
+
+
+```bash
+cd ~
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+chmod +x kubectl
+```
+
+
+- 複製到 /usr/local/bin/
+
+```bash
+cd ~
+cp kubectl /usr/local/bin
+```
+
+
+- 產生 kubenetes ca
+```bash
+cd ~
+magnum ca-sign --cluster kube --csr client.csr > client.crt
+magnum ca-show --cluster kube > ca.crt
+
+```
+
+
+
+- 設定 kubectl
+
+```bash
+cd ~
+KUBERNETES_URL=$(magnum cluster-show kube |
+                 awk '/ api_address /{print $4}')
+
+# Set kubectl to use the correct certs
+kubectl config set-cluster k8s-cluster --server=${KUBERNETES_URL} \
+    --certificate-authority=$(pwd)/ca.crt
+kubectl config set-credentials client --certificate-authority=$(pwd)/ca.crt \
+    --client-key=$(pwd)/client.key --client-certificate=$(pwd)/client.crt
+kubectl config set-context k8s-cluster --cluster=k8s-cluster --user=client
+kubectl config use-context k8s-cluster
+```
+
+- 看 k8s cluster 狀態
+```bash
+kubectl cluster-info
+```
