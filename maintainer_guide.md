@@ -77,3 +77,31 @@ sudo docker exec -it -u root cinder_backup rbd --id cinder-backup -p backups ls
 
 遇到此問題時，解決方法是重新起到那個 container ，讓它讀取新的 container。
 目前已知有此問題的 container 有 cinder_backup
+
+
+計劃性停機與還原
+----------------
+
+原則：先關機的最後開
+假設有三台 controller node, 名字為 c1, c2, c3
+誰是 c1, c2, c3 不重要
+
+關機步驟：
+    - 關閉 compute node
+    - 關閉 c1
+    - 關閉 c2
+    - 關閉 c3
+
+復原步驟：
+    - 開啟 c3
+    - 開啟 c2
+    - 開啟 c1
+    - 開啟 compute node
+
+
+突然停機應變措施
+----------------
+
+compute node 突然停機： 開啟它
+單一 controller node 突然停機： 開啟它
+複數的 controller node 突然停機： 找出最晚掛的，最先開
