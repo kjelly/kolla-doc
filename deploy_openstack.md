@@ -61,7 +61,7 @@ docker load < ~/kolla-ansible-docker-ocata
 - 選項設定，可做可不做。記得移除前面的 # 字號
   - enable_central_logging 改成 yes （這樣 log 會額外存到 elasticsearch)
   - 要監控實體機器，則將 enable_influxdb, enable_telegraf, enable_grafana 改成 yes
-  - 要監控虛擬機器，則將 enable_ceilometer, enable_gnocchi 改成 yes。
+  - 要監控虛擬機器，則將 enable_ceilometer, enable_gnocchi, enable_aodh, enable_panko 改成 yes。
     並將 ceilometer_database_type 改成 gnocchi。將 ceilometer_event_type 改成 gnocchi。
   - 如果你有裝 ceph ，則將 gnocchi_backend_storage 改成 ceph。在無 ceph 的情形下
     ，無法在 multi node 的環境下使用 gnocchi 。
