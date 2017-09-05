@@ -1,12 +1,38 @@
 # Solutions
 
+## kolla
+
+- 如何增加 compute node
+
+  1. 進入 kolla-ansible-docker 裡
+  2. 修改 /etc/kolla-ansible-docker/inventory 。將新主機資訊寫在 [compute] 裡
+  3. 執行 ka deploy
+
+- 如何減少 compute node
+  1. 用下列指令停用 compute service 。(能夠執行nova 指令即可）
+     注意：不要用到 TripleO 的 stackrc
+     ```bash
+     nova service-disable {{ compute_host }} nova-compute
+     ```
+  2. 在 `compute node` 是清除所有 container (不要執行錯台）
+     cleanup-container 程式放在 kolla-ansible-docker 這個 container
+     裡的 /kolla-ansible/tools/ 下
+     ```bash
+     bash cleanup-containers
+     ```
+  3. 用下列指令刪除 nova-compute
+     可以用 nova service-list 看 service_name
+     ```bash
+     nova service-delete {{ service_name }}
+     ```
+
 ## sahara
 - CreationFailed: Failed to create trust
 
   1. https://review.openstack.org/#/c/461814/3/ansible/roles/sahara/templates/sahara.conf.j2
   2. 將 heat.conf 的 trusts_delegated_roles = heat_stack_owner 註解
 
-## cinder 
+## cinder
 
 - cinder-backup: Error: error connecting to the cluster: error code 95
   cinder bacup 出現上面錯誤訊息k，解法：確保 cinder-backups 有 cinder 和 cinder-backups 的 keyring
@@ -18,7 +44,7 @@
   - 修改 /etc/ironic/ironic.conf ，將 `[ilo]` 底下的 `default_boot_mode` 改成 `auto`
 
   - 重新啟動 ironic service
-    
+
     ```sh
     sudo systemctl restart openstack-ironic-api.service
     sudo systemctl restart openstack-ironic-conductor.service
