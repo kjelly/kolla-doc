@@ -12,7 +12,7 @@
   1. 用下列指令停用 compute service 。(能夠執行nova 指令即可）
      注意：不要用到 TripleO 的 stackrc
      ```bash
-     nova service-disable {{ compute_host }} nova-compute
+     nova service-disable {{ host }} nova-compute
      ```
   2. 在 `compute node` 是清除所有 container (不要執行錯台）
      cleanup-container 程式放在 kolla-ansible-docker 這個 container
@@ -21,9 +21,9 @@
      bash cleanup-containers
      ```
   3. 用下列指令刪除 nova-compute
-     可以用 nova service-list 看 service_name
+     可以用 nova service-list 看 host
      ```bash
-     nova service-delete {{ service_name }}
+     nova service-delete {{ host }}
      ```
 
 ## sahara
