@@ -78,6 +78,7 @@ sudo docker exec -it -u root cinder_backup rbd --id cinder-backup -p backups ls
 誰是 c1, c2, c3 不重要
 
 關機步驟：
+    - 關閉所有 instance
     - 關閉 compute node
     - 關閉 c1
     - 關閉 c2
@@ -88,6 +89,7 @@ sudo docker exec -it -u root cinder_backup rbd --id cinder-backup -p backups ls
     - 開啟 c2
     - 開啟 c1
     - 開啟 compute node
+    - 開啟 instance
 
 
 ## 突然停機應變措施
@@ -110,3 +112,73 @@ compute node 突然停機： 開啟它
 - 還原 mysql cluseter/mariadb cluster
 - 還原 ceph 資料
 
+
+## 單一 controller node 損壞
+
+- 重灌作業系統（如果作業系統有故障的話）
+- 清除 kolla container
+  ```bash
+  wget https://raw.githubusercontent.com/openstack/kolla-ansible/master/tools/cleanup-containers -O ~/cleanup-containers
+  sudo bash ~/cleanup-containers
+  ```
+- 更新 inventory
+  (下面動作與佈署 OpenStack 相同，只是在執行 prepare 和 ka bootstrap-servers 時，
+   只能在新主機上跑，避免 OpenStack 損壞）
+- 執行 `prepare --limit new_host_name`
+- 處理 networking bonding 等動作
+- 執行 `ka bootstrap-servers --limit new_host_name`
+- 執行 `ka deploy`
+
+
+## mariadb cluster 無法正常啟動
+
+- 將所有 controller 的 mariadb 和 haproxy 停止
+  ```bash
+  sudo docker stop mariadb
+  sudo docker stop harpoxy
+  ```
+
+- 找出擁有最新資料的主機。在每一台電腦下下面指令，找出 log number 最大的主機。
+  172.23.103.1:4000/kolla/centos-source-mariadb:4.0.1 這個要換成該環境的 image。
+  ```bash
+  sudo docker run -u root --net=host --rm -e "KOLLA_CONFIG_STRATEGY=COPY_ALWAYS" -v /etc/kolla/mariadb:/var/lib/kolla/config_files  -v mariadb:/var/lib/mysql -it 172.23.103.1:4000/kolla/centos-source-mariadb:4.0.1 mysqld --wsrep-recover
+  ```
+
+- 在擁有最大 log number 的主機做下面指令，該主機為 master。
+  進入 mariadb container，以下指令都在此 container 內部執行。
+  ```bash
+  sudo docker run -u root --net=host --rm -e "KOLLA_CONFIG_STRATEGY=COPY_ALWAYS" -v /etc/kolla/mariadb:/var/lib/kolla/config_files  -v mariadb:/var/lib/mysql -it --name mariadb_recovery 172.23.103.1:4000/kolla/centos-source-mariadb:4.0.1 /bin/bash
+  ```
+  初始化 mariadb 設定檔
+  ```bash
+  kolla_start
+  ```
+  啟動 database server
+  ```bash
+  mysqld_safe --wsrep_cluster_address=gcomm://
+  ```
+  若上面指令無法持續執行，則執行下面步驟，否則就跳過
+  編輯 /var/lib/mysql/grastate.dat 檔案，將 safe_to_bootstrap 改成 1
+  啟動 database server。此時這指令會持續執行。
+  ```bash
+  mysqld_safe --wsrep_cluster_address=gcomm://
+  ```
+
+- 在其他 controller node 執行下面動作
+  ```bash
+  docker start mariadb
+  ```
+  若上面指令會執行失敗，則將 /var/lib/mysql/grastate.dat 改成 1。用下面的指令編輯。
+  ```bash
+  sudo docker run -u root --net=host --rm -e "KOLLA_CONFIG_STRATEGY=COPY_ALWAYS" -v /etc/kolla/mariadb:/var/lib/kolla/config_files  -v mariadb:/var/lib/mysql -it 172.23.103.1:4000/kolla/centos-source-mariadb:4.0.1 vi /var/lib/mysql/grastate.dat
+  ```
+
+- 將剛剛在 master ，停止你剛剛自己啟動的 container。
+  ```bash
+  sudo docker stop mariadb_recovery
+  sudo docker rm mariadb_recovery
+  ```
+  啟動原本的 container。
+  ```bash
+  sudo docker start mariadb
+  ```
