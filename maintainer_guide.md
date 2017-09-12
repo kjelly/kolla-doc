@@ -181,4 +181,9 @@ compute node 突然停機： 開啟它
   啟動原本的 container。
   ```bash
   sudo docker start mariadb
+  sudo docker start haproxy
+  ```
+- 啟動其他主機的 haproxy
+  ```bash
+  sudo docker start haproxy
   ```
