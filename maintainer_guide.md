@@ -153,12 +153,16 @@ compute node 突然停機： 開啟它
   ```bash
   kolla_start
   ```
+  若上面指令無法持續執行(指無法回到bash)，則執行下面步驟，否則就跳過
+
   啟動 database server
   ```bash
   mysqld_safe --wsrep_cluster_address=gcomm://
   ```
-  若上面指令無法持續執行，則執行下面步驟，否則就跳過
+  若上面指令無法持續執行(指無法回到bash)，則執行下面步驟，否則就跳過
+
   編輯 /var/lib/mysql/grastate.dat 檔案，將 safe_to_bootstrap 改成 1
+
   啟動 database server。此時這指令會持續執行。
   ```bash
   mysqld_safe --wsrep_cluster_address=gcomm://
@@ -173,7 +177,7 @@ compute node 突然停機： 開啟它
   sudo docker run -u root --net=host --rm -e "KOLLA_CONFIG_STRATEGY=COPY_ALWAYS" -v /etc/kolla/mariadb:/var/lib/kolla/config_files  -v mariadb:/var/lib/mysql -it 172.23.103.1:4000/kolla/centos-source-mariadb:4.0.1 vi /var/lib/mysql/grastate.dat
   ```
 
-- 將剛剛在 master ，停止你剛剛自己啟動的 container。
+- 將剛剛在 master (用另外一個連線) ，停止你剛剛自己啟動的 container。
   ```bash
   sudo docker stop mariadb_recovery
   sudo docker rm mariadb_recovery
@@ -187,3 +191,11 @@ compute node 突然停機： 開啟它
   ```bash
   sudo docker start haproxy
   ```
+
+## galera cluster 發生此錯誤 this member has applied more events than the primary component.Data loss is possible. Aborting.
+
+解決辦法
+```bash
+cd /var/lib/mysql
+rm grastate.dat ib_log* -f
+```

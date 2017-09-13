@@ -30,6 +30,7 @@
      ```bash
      nova service-delete {{ host }}
      ```
+  4. 成功了
 
 ## sahara
 - CreationFailed: Failed to create trust
