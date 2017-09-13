@@ -8,9 +8,9 @@
   - 修改 /etc/kolla-ansible-docker/inventory 。將新主機資訊寫在 [compute] 裡
     (下面動作與佈署 OpenStack 相同，只是在執行 prepare 和 ka bootstrap-servers 時，
      只能在新主機上跑，避免 OpenStack 損壞）
-  - 執行 `prepare --limit new_host_name`
+  - 執行 `prepare`
   - 處理 networking bonding 等動作
-  - 執行 `ka bootstrap-servers --limit new_host_name`
+  - 執行 `ka bootstrap-servers`
   - 執行 `ka deploy`
 
 - 如何減少 compute node
