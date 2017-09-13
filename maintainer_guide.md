@@ -135,19 +135,19 @@ compute node 突然停機： 開啟它
 - 將所有 controller 的 mariadb 和 haproxy 停止
   ```bash
   sudo docker stop mariadb
-  sudo docker stop harpoxy
+  sudo docker stop haproxy
   ```
 
 - 找出擁有最新資料的主機。在每一台電腦下下面指令，找出 log number 最大的主機。
   172.23.103.1:4000/kolla/centos-source-mariadb:4.0.1 這個要換成該環境的 image。
   ```bash
-  sudo docker run -u root --net=host --rm -e "KOLLA_CONFIG_STRATEGY=COPY_ALWAYS" -v /etc/kolla/mariadb:/var/lib/kolla/config_files  -v mariadb:/var/lib/mysql -it 172.23.103.1:4000/kolla/centos-source-mariadb:4.0.1 mysqld --wsrep-recover
+  sudo docker run --net=host --rm -e "KOLLA_CONFIG_STRATEGY=COPY_ALWAYS" -v /etc/kolla/mariadb:/var/lib/kolla/config_files  -v mariadb:/var/lib/mysql -it 172.23.103.1:4000/kolla/centos-source-mariadb:4.0.1 mysqld --wsrep-recover
   ```
 
 - 在擁有最大 log number 的主機做下面指令，該主機為 master。
   進入 mariadb container，以下指令都在此 container 內部執行。
   ```bash
-  sudo docker run -u root --net=host --rm -e "KOLLA_CONFIG_STRATEGY=COPY_ALWAYS" -v /etc/kolla/mariadb:/var/lib/kolla/config_files  -v mariadb:/var/lib/mysql -it --name mariadb_recovery 172.23.103.1:4000/kolla/centos-source-mariadb:4.0.1 /bin/bash
+  sudo docker run --net=host --rm -e "KOLLA_CONFIG_STRATEGY=COPY_ALWAYS" -v /etc/kolla/mariadb:/var/lib/kolla/config_files  -v mariadb:/var/lib/mysql -it --name mariadb_recovery 172.23.103.1:4000/kolla/centos-source-mariadb:4.0.1 /bin/bash
   ```
   初始化 mariadb 設定檔
   ```bash
