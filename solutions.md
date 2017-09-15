@@ -12,6 +12,7 @@
   - 處理 networking bonding 等動作
   - 執行 `ka bootstrap-servers`
   - 執行 `ka deploy`
+  - 執行 `post_add_compute_node`
 
 - 如何減少 compute node
   1. 用下列指令停用 compute service 。(能夠執行nova 指令即可）
