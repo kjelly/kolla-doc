@@ -28,6 +28,15 @@ docker load < ~/kolla-ansible-docker-ocata
     sudo ./_config.sh kolla-all-in-one
     ```
 
+- 執行下面指令，進入 container
+
+    ```bash
+    cd ~/kolla-ansible-docker
+    sudo ./_exec.sh kolla-all-in-one
+
+   ```
+
+
 - 修改 /etc/kolla-ansible-docker/inventory。將 controller 資訊填在 [control]下方，network node 資訊填在
   [network] 下方。以此類推。network node 無特別需求，則和 controller 一樣。第一欄位填寫 ip 或是主機名稱。如
 
@@ -80,14 +89,6 @@ docker load < ~/kolla-ansible-docker-ocata
     ```
 
 - 修改 /etc/kolla/passwords.yml 如果你想換密碼的話
-
-- 執行下面指令，進入 container
-
-    ```bash
-    cd ~/kolla-ansible-docker
-    sudo ./_exec.sh kolla-all-in-one
-
-   ```
 
 - 此步驟不一定要做，讓每台電腦的 interface 名稱固定。在 production 環境中一定要做
   避免電腦的 interface 名稱改變而導致 OpenStack 毀損。
