@@ -69,6 +69,12 @@ docker load < ~/kolla-ansible-docker-ocata
     ```
     parted /dev/sdb -s -- mklabel gpt mkpart KOLLA_CEPH_OSD_BOOTSTRAP 1 -1
     ```
+  - 自行建立 `/etc/kolla/config/ceph.conf` ，增加以下內容
+    ```
+    [global]
+    osd pool default size = 1
+    osd pool default min size = 1
+    ```
 
 - 選項設定，可做可不做。記得移除前面的 # 字號
   - enable_central_logging 改成 yes （這樣 log 會額外存到 elasticsearch)
