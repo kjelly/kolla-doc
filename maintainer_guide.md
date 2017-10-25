@@ -77,14 +77,14 @@ sudo docker exec -it -u root cinder_backup rbd --id cinder-backup -p backups ls
 假設有三台 controller node, 名字為 c1, c2, c3
 誰是 c1, c2, c3 不重要
 
-關機步驟：
+- 關機步驟：
     - 關閉所有 instance
     - 關閉 compute node
     - 關閉 c1
     - 關閉 c2
     - 關閉 c3
 
-復原步驟：
+- 復原步驟：
     - 開啟 c3
     - 開啟 c2
     - 開啟 c1
@@ -102,14 +102,16 @@ compute node 突然停機： 開啟它
 ## 備份 kolla
 
 - 備份 deploy node 下的 /etc/kolla 的檔案
-- 使用 sqldump 備份資料庫
+- 使用 sqldump 備份資料庫:
+  - `mysqldump -u root -p --all-databases > alldb.sql`
 - 備份 ceph 的 pool
 
 ## 根據備份重建 kolla 環境
 
 - 將之前備份的 kolla 設定檔還原到 /etc/kolla 路徑
 - 重新佈署 OpenStack
-- 還原 mysql cluseter/mariadb cluster
+- 還原 mysql cluseter/mariadb cluster:
+  - mysql -u root -p < alldb.sql
 - 還原 ceph 資料
 
 
