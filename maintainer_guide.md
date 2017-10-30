@@ -203,9 +203,9 @@ rm grastate.dat ib_log* -f
 ```
 ## 更新 haproxy 憑證
 
-- 將新的憑證檔 ( haproxy.pem) 放到所有 controller 的 /etc/kolla/haproxy 下
+- 將新的憑證檔 ( haproxy.pem) 放到所有 deploy node 的 /etc/kolla/certificates 下
 
-- 重新啟動 haproxy container
+- 重新跑 reconfigure
 ```bash
-sudo docker restart haproxy
+ka reconfigure
 ```
