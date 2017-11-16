@@ -139,6 +139,10 @@ openstack baremetal configure boot
 
 - 建立 nova key-pair，名稱為 my。用來 ssh 用的
 
+```bash
+nova keypair-add my --pub-key ~/.ssh/id_rsa.pub
+```
+
 
 - 替實體主機安裝系統
 ```bash
@@ -151,7 +155,7 @@ openstack baremetal configure boot
 ```
 
 - 預設那些實體機器的 default gateway 是 deploy node。如果要讓那些機器可以透過 deploy node
-  連到外面，可透過下面指令完成。192.0.2.0/24 改成你 ~/undercloud.conf 裡 network_cidr 的值 
+  連到外面，可透過下面指令完成。192.0.2.0/24 改成你 ~/undercloud.conf 裡 network_cidr 的值
 
 ```bash
 iptables -t nat -A POSTROUTING -s 192.0.2.0/24 -o 可以對外的網卡 -j MASQUERADE

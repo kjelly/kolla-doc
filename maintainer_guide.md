@@ -207,3 +207,11 @@ compute node 突然停機： 開啟它
 cd /var/lib/mysql
 rm grastate.dat ib_log* -f
 ```
+## 更新 haproxy 憑證
+
+- 將新的憑證檔 ( haproxy.pem) 放到所有 deploy node 的 /etc/kolla/certificates 下
+
+- 重新跑 reconfigure
+```bash
+ka reconfigure
+```
