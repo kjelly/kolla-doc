@@ -80,11 +80,17 @@ sudo docker exec -it -u root cinder_backup rbd --id cinder-backup -p backups ls
 - 關機步驟：
     - 關閉所有 instance
     - 關閉 compute node
+    - 停用 kolla container
+			```
+			wget -O ~/stop_kolla.sh https://gist.githubusercontent.com/kjelly/ad57505d8eaa21ca3b79aa4b18b17de6/raw/e0b29a51f8bb3277f9f3398c615fa5f6224d208e/stop_kolla.sh
+			bash ~/stop_kolla.sh
+			```
     - 關閉 c1
     - 關閉 c2
     - 關閉 c3
 
 - 復原步驟：
+    -
     - 開啟 c3
     - 開啟 c2
     - 開啟 c1
