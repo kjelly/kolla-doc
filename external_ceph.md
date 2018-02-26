@@ -7,7 +7,7 @@ glance 與 cinder
 
 要讓 OpenStack 的 cinder 與 glance 接 ceph 很簡單，
 只要將 globals.yml 中 enable_ceph 設成 no。
-glance_backend_ceph 和 cinder_backend_ceph 設成 yes 即可。
+glance_backend_ceph 和 cinder_backend_ceph 和 nova_backend_ceph 設成 yes 即可。
 然後在 /etc/kolla 目錄下建立下列的目錄結構：
 ```
 
@@ -96,5 +96,21 @@ backup_ceph_stripe_unit = 0
 backup_ceph_stripe_count = 0
 restore_discard_excess_bytes = true
 
+```
+
+/etc/kolla/config/nova/nova-compute.conf 的內容如下(如果 nova 要接 ceph 的話)
+
+```
+[libvirt]
+images_rbd_pool=vms
+images_type=rbd
+images_rbd_ceph_conf=/etc/ceph/ceph.conf
+rbd_user=nova
+```
+
+/etc/kolla/config/nova/nova-compute.conf 的內容如下(如果 nova 不要接 ceph 的話)
+```
+[libvirt]
+images_type=default
 
 ```
