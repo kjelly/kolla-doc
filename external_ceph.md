@@ -10,7 +10,6 @@ glance 與 cinder
 glance_backend_ceph 和 cinder_backend_ceph 和 nova_backend_ceph 設成 yes 即可。
 然後在 /etc/kolla 目錄下建立下列的目錄結構：
 ```
-
 .
 ├── config
 │   ├── cinder
@@ -30,7 +29,8 @@ glance_backend_ceph 和 cinder_backend_ceph 和 nova_backend_ceph 設成 yes 即
 ├────── nova
 │       ├── ceph.client.cinder.keyring
 │       ├── ceph.client.nova.keyring
-│       └── ceph.conf
+│       ├── ceph.conf
+│       └── nova-compute.conf
 ├── globals.yml
 └── passwords.yml
 
