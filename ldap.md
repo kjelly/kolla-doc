@@ -53,27 +53,25 @@ driver = ldap
 
 ```
 [ldap]
-url = ldaps://172.20.0.22:636
+url = ldap://172.20.0.22
 user = cn=admin,dc=example,dc=com
 password = admin
 suffix = DC=example,DC=com
-user_tree_dn = OU=people,DC=example,DC=com
-user_objectclass = person
-user_id_attribute = sAMAccountName
-user_name_attribute = sAMAccountName
-user_mail_attribute = mail
-user_pass_attribute =
-user_enabled_attribute = userAccountControl
-user_enabled_mask = 2
-user_enabled_default = 512
+
+user_tree_dn = ou=people,dc=example,dc=com
+user_objectclass = inetOrgPerson
+
+group_tree_dn = ou=group,dc=example,dc=com
+group_objectclass = groupOfUniqueNames
+
 user_attribute_ignore = password,tenant_id,tenants
 user_allow_create = False
 user_allow_update = False
 user_allow_delete = False
-query_scope = sub
-chase_referrals = False
+
 use_tls = False
 tls_req_cert = never
+
 
 [identity]
 driver = ldap
@@ -91,6 +89,17 @@ driver = ldap
   ```bash
   ka reconfigure
   ```
+
+## 測試指令
+
+
+### 列出該 domains 下的 user
+
+```bash
+openstack domain list
+openstack user list --domain domain_id
+
+```
 
 ## 疑難排解
 
