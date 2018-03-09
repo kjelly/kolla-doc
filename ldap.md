@@ -90,6 +90,17 @@ driver = ldap
   ka reconfigure
   ```
 
+## 測試指令
+
+
+### 列出該 domains 下的 user
+
+```bash
+openstack domain list
+openstack user list --domain domain_id
+
+```
+
 ## 讓某個 ldap user 擁有 openstack 管理者權限
 
 - 在 controller 或是可以下 openstack　指令的電腦，執行下列指令。LAB 請換成自己的 domain name
@@ -122,18 +133,6 @@ openstack user list --domain LAB
 ```bash
 openstack role add --project admin --user 84058cb685d2c6e027d4649fcf23f27050eba8595269297b1a088e2f021be1d4 _member_
 ```
-
-## 測試指令
-
-
-### 列出該 domains 下的 user
-
-```bash
-openstack domain list
-openstack user list --domain domain_id
-
-```
-
 ## 疑難排解
 
 
