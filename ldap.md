@@ -139,3 +139,10 @@ openstack role add --project admin --user 84058cb685d2c6e027d4649fcf23f27050eba8
 ### log information
 
 log 路徑在 `/var/lib/docker/volumes/kolla_logs/_data/keystone/keystone.log`
+
+### 用 ldapsearch 測試是否可以取出資訊
+
+
+```bash
+sudo ldapsearch -h 172.20.0.22 -b "dc=example,dc=com" -s sub "(cn=*)" -x "cn=admin,dc=example,dc=com"
+```
