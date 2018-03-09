@@ -120,7 +120,7 @@ openstack user list --domain LAB
 讓 user 加入到 admin project
 
 ```bash
-openstack role add --project admin --user 84058cb685d2c6e027d4649fcf23f27050eba8595269297b1a088e2f021be1d4 `_member_`
+openstack role add --project admin --user 84058cb685d2c6e027d4649fcf23f27050eba8595269297b1a088e2f021be1d4 _member_
 ```
 
 ## 測試指令
