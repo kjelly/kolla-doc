@@ -6,7 +6,7 @@ Use pre-building images
 - 下載 registry data 到 deploy node
 
 ```
-wget http://172.22.104.1:4433/centos-source/registry_data_4.0.1.tar.gz -O ~/registry_data.tar.gz
+wget http://172.22.104.1:4433/centos-source/registry_data_4.0.3.tar.gz -O ~/registry_data.tar.gz
 ```
 
 - 在 deploy node 解壓縮到

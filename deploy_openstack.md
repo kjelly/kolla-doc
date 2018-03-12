@@ -46,7 +46,7 @@ docker load < ~/kolla-ansible-docker-ocata
 - 修改 /etc/kolla/globals.yml 的下列欄位
     - kolla_base_distro : centos
     - kolla_install_type ： source
-    - openstack_release : 4.0.1
+    - openstack_release : 4.0.3
     - docker_registry: 填寫裝在 deploy node 的 registry 格式如 "192.0.2.1:4000"，4000 為 port 號
     - network_interface: management 網段用的 interface
     - kolla_internal_vip_address : controller 的 vip ，此 ip 不能有人使用。此 ip 走 network_interface
