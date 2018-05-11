@@ -87,3 +87,26 @@
     ```
 
   - 現在用 nova boot 時， hp 機器就可以用 uefi 開機了（如果有支援的話）
+
+## magnum offline
+
+
+
+- run etcd
+```bash
+docker run -d -v /usr/share/ca-certificates/:/etc/ssl/certs -p 4001:4001 -p 2380:2380 -p 2379:2379 \
+ --name etcd quay.io/coreos/etcd:v2.3.8 \
+ -name etcd0 \
+ -advertise-client-urls http://${HostIP}:2379,http://${HostIP}:4001 \
+ -listen-client-urls http://0.0.0.0:2379,http://0.0.0.0:4001 \
+ -initial-advertise-peer-urls http://${HostIP}:2380 \
+ -listen-peer-urls http://0.0.0.0:2380 \
+ -initial-cluster-token etcd-cluster-1 \
+ -initial-cluster etcd0=http://${HostIP}:2380 \
+ -initial-cluster-state new
+```
+
+- run discovery.etcd.io
+```bash
+docker run --name dis -d -p 80:8087 -e DISC_ETCD=http://192.168.1.151:2379 -e DISC_HOST=http://192.168.1.151 quay.io/coreos/discovery.etcd.io
+```
