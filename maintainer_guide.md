@@ -215,3 +215,9 @@ rm grastate.dat ib_log* -f
 ```bash
 ka reconfigure
 ```
+
+## 清除 keystone token
+
+```bash
+docker exec -uroot -it mariadb mysql -u root -p -e "truncate keystone.token;"
+```
