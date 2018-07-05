@@ -90,8 +90,6 @@
 
 ## magnum offline
 
-
-
 - run etcd
 ```bash
 docker run -d -v /usr/share/ca-certificates/:/etc/ssl/certs -p 4001:4001 -p 2380:2380 -p 2379:2379 \
@@ -110,3 +108,4 @@ docker run -d -v /usr/share/ca-certificates/:/etc/ssl/certs -p 4001:4001 -p 2380
 ```bash
 docker run --name dis -d -p 80:8087 -e DISC_ETCD=http://192.168.1.151:2379 -e DISC_HOST=http://192.168.1.151 quay.io/coreos/discovery.etcd.io
 ```
+開啟 registry 需要 trust/cluster_user_trust = True in magnum.conf
