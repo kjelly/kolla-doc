@@ -12,14 +12,14 @@ Deploy OpenStack
 - 下載 kolla-ansible-docker
 
 ```
-git clone https://github.com/ya790206/kolla-ansible-docker ~/kolla-ansible-docker
+git clone https://github.com/kjelly/kolla-ansible-docker ~/kolla-ansible-docker
 ```
 
 - 下載並安裝 kolla-ansible-docker image
 
 ```bash
-wget http://172.22.104.1:4433/kolla-ansible-docker/ocata -O ~/kolla-ansible-docker-ocata
-docker load < ~/kolla-ansible-docker-ocata
+wget http://172.22.104.1:4433/kolla-ansible-docker/pike -O ~/kolla-ansible-docker-pike
+docker load < ~/kolla-ansible-docker-pike
 ```
 
 - 到 kolla-ansible-docker 目錄下執行下面指令
@@ -46,7 +46,7 @@ docker load < ~/kolla-ansible-docker-ocata
 - 修改 /etc/kolla/globals.yml 的下列欄位
     - kolla_base_distro : centos
     - kolla_install_type ： source
-    - openstack_release : 4.0.3
+    - openstack_release : 5.0.2
     - docker_registry: 填寫裝在 deploy node 的 registry 格式如 "192.0.2.1:4000"，4000 為 port 號
     - network_interface: management 網段用的 interface
     - kolla_internal_vip_address : controller 的 vip ，此 ip 不能有人使用。此 ip 走 network_interface
@@ -56,7 +56,7 @@ docker load < ~/kolla-ansible-docker-ocata
     - storage_interface : storage 網段用的 interface
     - neutron_external_interface: neutron 網段用的 interface
 
-- 如果要設定外部的 ceph ，請多做這些事情 [external ceph](https://github.com/ya790206/kolla-doc/blob/master/external_ceph.md)
+- 如果要設定外部的 ceph ，請多做這些事情 [external ceph](https://github.com/kjelly/kolla-doc/blob/master/external_ceph.md)
 
 - 選項設定，可做可不做。記得移除前面的 # 字號
   - enable_central_logging 改成 yes （這樣 log 會額外存到 elasticsearch)
@@ -120,7 +120,7 @@ docker load < ~/kolla-ansible-docker-ocata
 
 - 此步驟不一定要做，產生 network bonding 設定檔。
   由於產生 network bonding 的程式不在 container 內
-  所以文件參考 [network bonding](https://github.com/ya790206/kolla-doc/blob/master/network-bonding.md)
+  所以文件參考 [network bonding](https://github.com/kjelly/kolla-doc/blob/master/network-bonding.md)
 
 
 
