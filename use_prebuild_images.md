@@ -30,6 +30,6 @@ docker load < ~/registry.tar
 - 在 deploy node 啟動 registry
 
 ```
-sudo docker run -d -p 4000:5000 --restart=always --name registry -v /registry:/var/lib/registry/docker/registry registry:2
+sudo docker run -d -p 4000:5000 --restart=always --name registry -v /registry:/var/lib/registry/docker/registry:z registry:2
 
 ```
