@@ -50,6 +50,7 @@ docker restart glance_registry
 ```bash
 sudo docker exec -it -u root cinder_volume rbd --id cinder -p volumes ls
 sudo docker exec -it -u root cinder_backup rbd --id cinder-backup -p backups ls
+sudo docker exec -it -u root cinder_backup ceph -n client.cinder --keyring=/etc/ceph/ceph.client.cinder.keyring health
 ```
 
 ## 主機重開機後要做的事情
@@ -221,3 +222,23 @@ ka reconfigure
 ```bash
 docker exec -uroot -it mariadb mysql -u root -p -e "truncate keystone.token;"
 ```
+
+## cinder 可以建立v volume，但是 instance 無法 attach volume
+
+cinder 可以建立 volume，但是 instance 無法 attach volume
+無法 boot from volume
+libvirtd 出現 qemu-kvm: error connecting: Operation not permitted
+
+解決辦法：此問題可能是 libvritd 的 secret 錯誤
+檢查方法
+```
+sudo virsh secret-get-value --secret {uuid of secret}
+```
+
+修改方法：
+```
+sudo virsh secret-set-value --secret {uuid of secret} --base64 $(cat keyring)
+```
+
+
+
