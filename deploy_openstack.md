@@ -11,16 +11,16 @@ Deploy OpenStack
 
 - 下載 kolla-ansible-docker
 
-```
-git clone https://github.com/kjelly/kolla-ansible-docker ~/kolla-ansible-docker
-```
+  ```
+  git clone https://github.com/kjelly/kolla-ansible-docker ~/kolla-ansible-docker
+  ```
 
 - 下載並安裝 kolla-ansible-docker image
 
-```bash
-wget http://172.22.104.1:4433/kolla-ansible-docker/pike -O ~/kolla-ansible-docker-pike
-docker load < ~/kolla-ansible-docker-pike
-```
+  ```bash
+  wget http://172.22.104.1:4433/rocky/kolla-ansible-docker-rocky-image.tar -O kolla-ansible-docker-rocky-image.tar
+  docker load < ~/kolla-ansible-docker-rocky-image.tar
+  ```
 
 - 到 kolla-ansible-docker 目錄下執行下面指令
 
@@ -80,11 +80,10 @@ docker load < ~/kolla-ansible-docker-pike
 
 - 執行下面指令，進入 container
 
-    ```bash
-    cd ~/kolla-ansible-docker
-    sudo ./exec.sh
-
-   ```
+  ```bash
+  cd ~/kolla-ansible-docker
+  sudo ./exec.sh
+  ```
 
 - 此步驟不一定要做，讓每台電腦的 interface 名稱固定。在 production 環境中一定要做
   避免電腦的 interface 名稱改變而導致 OpenStack 毀損。
