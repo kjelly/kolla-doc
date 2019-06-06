@@ -50,7 +50,6 @@
     - kolla_internal_vip_address : controller 的 vip ，此 ip 不能有人使用。此 ip 走 network_interface
     - kolla_external_vip_interface: controller 的外部 vip 所有的 interface 。外部是指 keystone 裡面的 public url。先設定成和 neutron_external_interface 一樣的值。
     - kolla_external_vip_address: controller 的外部 vip ，此 ip 不能有人使用。外部是指 keystone 裡面的 public url
-    - docker_registry: docker registry，之前你將 kolla docker push 到的地方
     - storage_interface : storage 網段用的 interface
     - neutron_external_interface: neutron 網段用的 interface
 
