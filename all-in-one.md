@@ -10,15 +10,15 @@
 - 下載 kolla-ansible-docker
 
 ```
-git clone https://github.com/ya790206/kolla-ansible-docker ~/kolla-ansible-docker
+git clone https://github.com/kjelly/kolla-ansible-docker ~/kolla-ansible-docker
 ```
 
 - 下載並安裝 kolla-ansible-docker image
 
-```bash
-wget http://172.22.104.1:4433/kolla-ansible-docker/ocata -O ~/kolla-ansible-docker-ocata
-docker load < ~/kolla-ansible-docker-ocata
-```
+  ```bash
+  wget http://172.22.104.1:4433/rocky/kolla-ansible-docker-rocky-image.tar -O kolla-ansible-docker-rocky-image.tar
+  docker load < ~/kolla-ansible-docker-rocky-image.tar
+  ```
 
 - 到 kolla-ansible-docker 目錄下執行下面指令
 

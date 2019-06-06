@@ -118,7 +118,7 @@ compute node 突然停機： 開啟它
 - 將之前備份的 kolla 設定檔還原到 /etc/kolla 路徑
 - 重新佈署 OpenStack
 - 還原 mysql cluseter/mariadb cluster:
-  - mysql -u root -p < alldb.sql
+  - `mysql -u root -p < alldb.sql`
 - 還原 ceph 資料
 
 
@@ -219,9 +219,9 @@ ka reconfigure
 
 ## 清除 keystone token
 
-```bash
-docker exec -uroot -it mariadb mysql -u root -p -e "truncate keystone.token;"
-```
+  ```bash
+  docker exec -uroot -it mariadb mysql -u root -p -e "truncate keystone.token;"
+  ```
 
 ## cinder 可以建立v volume，但是 instance 無法 attach volume
 
@@ -241,4 +241,9 @@ sudo virsh secret-set-value --secret {uuid of secret} --base64 $(cat keyring)
 ```
 
 
+## 檢查 cinder 無法被刪除的原因 (rbd backend)
 
+```
+sudo docker exec -it -u root cinder_volume rbd -p volumes -n client.cinder --keyring=/etc/ceph/ceph.client.cinder.keyring snap ls volume-id
+sudo docker exec -it -u root cinder_volume rbd -p volumes -n client.cinder --keyring=/etc/ceph/ceph.client.cinder.keyring status volume-id
+```
