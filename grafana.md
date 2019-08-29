@@ -22,6 +22,12 @@ type: influxdb
 url: http://vip:8086
 database: telegraf
 
+4. 設定 keystone.conf 許可 cros
+   ```
+   [cors]
+   allowed_origin = http://192.168.11.3:3000
+   ```
+
 
 ## gnocchi with keystone
 

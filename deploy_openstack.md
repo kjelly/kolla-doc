@@ -53,6 +53,13 @@
     - storage_interface : storage 網段用的 interface
     - neutron_external_interface: neutron 網段用的 interface
 
+- 如果要設定外部的 ntp server ，則將 /etc/kolla/globals.yml 裡面，加上以下設定
+
+    ```
+    external_ntp_servers:
+      - "{{ groups['control'][0] }} "
+    ```
+
 - 如果要設定外部的 ceph ，請多做這些事情 [external ceph](https://github.com/kjelly/kolla-doc/blob/master/external_ceph.md)
 
 - 選項設定，可做可不做。記得移除前面的 # 字號
@@ -134,7 +141,9 @@
     - kolla_external_vip_interface: 將值改成 br-ex
 
   由於外部網路的 vip 要放在 br-ex 上，但是 br-ex 是由 container 建立的，所以第一次佈署時，無法填寫 br-ex
-  (因為 br-ex 不存在)。所以要在佈署後在修改設定
+  (因為 br-ex 不存在)。所以要在佈署後在修改設定。如果 default gateway 是 neutron_extenal_interface，也需
+  要把 defualt gateway 改成 br-ex
+
 
 - 在 container 裡面執行下列指令，
 
