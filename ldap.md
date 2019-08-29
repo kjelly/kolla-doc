@@ -81,9 +81,7 @@ driver = ldap
 - 在 deploy node，將 ldap 的憑證改名放到 /etc/kolla/config/keystone/domains/lab-ca.cer
   無 tls 則跳過
 
-- 在 deploy node 的 kolla-ansible container 裡，編輯 /kolla-ansible/ansible/roles/horizon/templates/local_settings.j2
-  將 OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT 改成 True
-  `OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True`
+- 在 /etc/kolla/globals.yml 加上 `horizon_keystone_multidomain: True`
 
 - 在 deploy node 的 kolla-ansible container 裡，執行下面指令
   ```bash
