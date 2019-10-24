@@ -39,3 +39,8 @@ Use pre-building images
   curl http://172.22.104.1:4000/v2/_catalog
   ```
 
+  - open 4000 port
+
+  ```
+  sudo iptables -I INPUT 1 -p tcp -m tcp --dport 4000 -j ACCEPT
+  ```

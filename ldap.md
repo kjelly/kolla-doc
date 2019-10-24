@@ -142,5 +142,5 @@ log 路徑在 `/var/lib/docker/volumes/kolla_logs/_data/keystone/keystone.log`
 
 
 ```bash
-sudo ldapsearch -h 172.20.0.22 -b "dc=example,dc=com" -s sub "(cn=*)" -x "cn=admin,dc=example,dc=com"
+ldapsearch -h 172.22.28.79:1389 -b "dc=ai,dc=nchc,dc=org,dc=tw" -D "cn=ai-admin,dc=ai,dc=nchc,dc=org,dc=tw" -w password
 ```
