@@ -1,8 +1,6 @@
-external ceph
-=============
+# external ceph
 
-glance 與 cinder
-----------------
+## glance 與 cinder
 
 
 要讓 OpenStack 的 cinder 與 glance 接 ceph 很簡單，
@@ -112,5 +110,24 @@ rbd_user=nova
 ```
 [libvirt]
 images_type=default
+
+```
+
+## gnocchi
+
+要讓 OpenStack 的 cinder 與 glance 接 ceph 很簡單，
+只要將 globals.yml 中 enable_ceph 設成 no。
+gnocchi_backend_storage 改成 ceph
+enable_redis 改成 yes
+然後在 /etc/kolla 目錄下建立下列的目錄結構：
+
+```
+
+.
+└── config
+    ├── gnocchi
+    │   ├── ceph.client.admin.keyring
+    │   └── ceph.conf
+    └── gnocchi.conf
 
 ```
