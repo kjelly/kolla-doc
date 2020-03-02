@@ -58,8 +58,6 @@ glance-api 的內容如下
 show_image_direct_url = True
 
 [glance_store]
-stores = rbd
-default_store = rbd
 rbd_store_pool = images
 rbd_store_user = glance
 rbd_store_ceph_conf = /etc/ceph/ceph.conf
