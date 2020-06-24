@@ -71,6 +71,7 @@ user_allow_delete = False
 
 use_tls = False
 tls_req_cert = never
+query_scope = sub
 
 
 [identity]

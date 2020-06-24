@@ -109,3 +109,15 @@ docker run -d -v /usr/share/ca-certificates/:/etc/ssl/certs -p 4001:4001 -p 2380
 docker run --name dis -d -p 80:8087 -e DISC_ETCD=http://192.168.1.151:2379 -e DISC_HOST=http://192.168.1.151 quay.io/coreos/discovery.etcd.io
 ```
 開啟 registry 需要 trust/cluster_user_trust = True in magnum.conf
+
+## 使用 centos image 時，haproxy 無法啟動
+
+移除 `ansible/roles/haproxy/templates/haproxy_run.sh.j2` 檔案中的 `-W` 參數
+
+
+## centos 8 缺少 localhost.key 和 localhost.crt
+
+
+```
+openssl req -newkey rsa:2048 -nodes -keyout /etc/pki/tls/private/localhost.key -x509 -days 365 -out /etc/pki/tls/certs/localhost.crt
+```
