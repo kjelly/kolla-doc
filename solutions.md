@@ -121,3 +121,12 @@ docker run --name dis -d -p 80:8087 -e DISC_ETCD=http://192.168.1.151:2379 -e DI
 ```
 openssl req -newkey rsa:2048 -nodes -keyout /etc/pki/tls/private/localhost.key -x509 -days 365 -out /etc/pki/tls/certs/localhost.crt
 ```
+
+
+## 根據主機名稱來客製化設定檔
+
+如果想要客製化個別主機的設定檔，則在 `/etc/kolla/config/服務名稱/主機名稱/設定檔名字`
+
+主機名稱為 inventory 裡面的名稱（/etc/kolla-ansible/inventory)
+
+如 `/etc/kolla/config/nova/c1/neutron.conf`
