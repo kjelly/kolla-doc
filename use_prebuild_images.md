@@ -30,7 +30,7 @@ Use pre-building images
 - 在 deploy node 啟動 registry
 
   ```
-  sudo docker run -d -p 4000:5000 --restart=always --name registry -v /registry:/var/lib/registry/docker/registry:z registry:2
+  docker run -d -p 4000:5000 --restart=always --name registry -v /registry:/var/lib/registry/docker/registry:z -e REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin='["http://webui-ip:9999"]' -e REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers='["Docker-Content-Digest"]' registry:2
 
   ```
 
@@ -39,8 +39,14 @@ Use pre-building images
   curl http://172.22.104.1:4000/v2/_catalog
   ```
 
-  - open 4000 port
+- open 4000 port
 
   ```
   sudo iptables -I INPUT 1 -p tcp -m tcp --dport 4000 -j ACCEPT
   ```
+
+- 可選：建立 dcoker registry web ui
+
+    ```
+    docker run -d -p 9999:80 -e REGISTRY_URL=http://registry-ip:4000 -e DELETE_IMAGES=true --name registry-ui joxit/docker-registry-ui:static
+    ```
